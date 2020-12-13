@@ -1,3 +1,4 @@
+import { LoginAction } from "./../auth.actions";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -8,6 +9,7 @@ import { AuthService } from "../auth.service";
 import { tap } from "rxjs/operators";
 import { noop } from "rxjs";
 import { Router } from "@angular/router";
+import { AppState } from "../../reducers";
 
 @Component({
   selector: "login",
@@ -21,7 +23,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private store: Store<AppState>
   ) {
     this.form = fb.group({
       email: ["test@angular-university.io", [Validators.required]],
@@ -34,6 +37,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.auth.login("test@angular-university.io", "test").subscribe((x) => {
       if (x) {
+        this.store.dispatch(new LoginAction(x));;
         this.router.navigate(["courses"]);
       }
     });

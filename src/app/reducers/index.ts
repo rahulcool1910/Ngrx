@@ -1,3 +1,5 @@
+import { AuthActionTypes } from "./../auth/auth.actions";
+import { User } from "./../model/user.model";
 import {
   ActionReducer,
   ActionReducerMap,
@@ -7,13 +9,30 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 
-export interface State {
 
+type AuthState = {
+  isLoggedIn: boolean;
+  user: User;
+};
+export interface AppState {
+  authState: AuthState;
 }
 
-export const reducers: ActionReducerMap<State> = {
 
+function AuthReducer(state: AuthState, action): AuthState {
+  switch (action.type) {
+    case AuthActionTypes.Login:
+      return {
+        isLoggedIn: true,
+        user: action.payload,
+      };
+  }
+}
+export const reducers: ActionReducerMap<AppState> = {
+  authState: AuthReducer,
 };
 
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<AppState>[] = !environment.production
+  ? []
+  : [];
