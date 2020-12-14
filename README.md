@@ -24,6 +24,22 @@
   user: User;
 }; 
 
-8) 
+8) change the state of the app
+
+    * create a action with few types
+
+    * add a constructor and pass some values to the action
+
+    *:NameX: (AuthReducer -> 
+          function which takes 2 arguments ( (state -> current) : typeX , (action -> new state)):typeX)
+
+    *  NameX === name in interface     
+
+
+9) ng g reducer ReducersName --flat=false --module modle.name;
+  //flat =new directory
+
+10) Selectors can b used instead of subscription  since they have memory
+
 
 
